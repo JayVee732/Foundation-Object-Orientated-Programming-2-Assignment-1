@@ -21,10 +21,18 @@ namespace Assignment1
     /// </summary>
     public partial class MainWindow : Window
     {
-        ObservableCollection<Vehicle> vehicleList;
+        //Creation of List for vehicles
+        List<Vehicle> vehicleType = new List<Vehicle>();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //When the program is started up, this method is called
+            vehicleType.Add(new Vehicle() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 50000, Description = "That's some good shtuff!" });
+            lbxDisplay.ItemsSource = vehicleType;
         }
     }
 }
