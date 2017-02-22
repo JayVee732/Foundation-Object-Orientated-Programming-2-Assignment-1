@@ -5,7 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="Car Application" Height="420" Width="620" ResizeMode="NoResize" Loaded="Window_Loaded">
+        Title="Car Application" Height="420" Width="620" ResizeMode="NoResize" Language="en-IE" Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <DataTemplate x:Key="listboxTemplate">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Make: " FontWeight="Bold" />
+                    <TextBlock Text="{Binding Make}" />
+
+                    <TextBlock Text="Model: " FontWeight="Bold" />
+                    <TextBlock Text="{Binding Model}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Price: " FontWeight="Bold" />
+                    <TextBlock Text="{Binding Price, StringFormat=c0}" />
+
+                    <TextBlock Text="Mileage: " FontWeight="Bold" />
+                    <TextBlock Text="{Binding Mileage}" />
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -23,22 +46,22 @@
 
         <!-- Radio Buttons at the top of the program -->
         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
-            <Image Source="/images/letterA.png"/>
+            <Image Source="/images/filterRadioBoxes/letterA.png"/>
             <RadioButton Name="rbnAll" Content="All" FontSize="12" Margin="10" GroupName="carTypes"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
-            <Image Source="/images/car.png"/>
+            <Image Source="/images/filterRadioBoxes/car.png"/>
             <RadioButton Name="rbnCars" Content="Cars" FontSize="12" Margin="10" GroupName="carTypes" />
         </StackPanel>
 
         <StackPanel Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
-            <Image Source="/images/motocycle.png"/>
+            <Image Source="/images/filterRadioBoxes/motocycle.png"/>
             <RadioButton Name="rbnBikes" Content="Bikes" FontSize="12" Margin="10" GroupName="carTypes"/>
         </StackPanel>
 
         <StackPanel Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
-            <Image Source="/images/van.png"/>
+            <Image Source="/images/filterRadioBoxes/van.png"/>
             <RadioButton Name="rbnVans" Content="Vans" FontSize="12" Margin="10" GroupName="carTypes" />
         </StackPanel>
         <!-- End of Radio Buttons -->
@@ -46,11 +69,12 @@
         <Label Content="Sort By" Grid.Row="1" FontSize="13" Margin="55, 10, 10, 10" />
         <ComboBox Grid.Row="1" Margin="105, 15, 55, 15" DockPanel.Dock="Right" Grid.ColumnSpan="2"/>
 
-        <ListBox Name="lbxDisplay" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" />
+        <ListBox Name="lbxDisplay" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" ItemTemplate="{StaticResource listboxTemplate}" SelectionChanged="lbxDisplay_SelectionChanged" />
         <!-- "Vehicle Details" Label -->
         <Label Content="Vehicle Details" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" FontSize="26" HorizontalContentAlignment="Center" Foreground="#FF343333" />
-
-        <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="10, 70, 10, 10"/>
+        <!-- Vehicle image goes here -->
+        <Image Name="imgVehicle" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Grid.Row="2" Margin="0, 0, 0, 135"></Image>
+        <TextBlock Name="tblVehicleDisplay" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,104,10,10"/>
 
         <!-- Bottom Buttons -->
         <StackPanel Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" HorizontalAlignment="Center" >

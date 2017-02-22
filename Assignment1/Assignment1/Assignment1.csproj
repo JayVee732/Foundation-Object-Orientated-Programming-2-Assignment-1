@@ -97,10 +97,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\letterA.png" />
-    <Resource Include="images\motocycle.png" />
-    <Resource Include="images\van.png" />
-    <Resource Include="images\car.png" />
+    <Resource Include="images\filterRadioBoxes\letterA.png" />
+    <Resource Include="images\filterRadioBoxes\motocycle.png" />
+    <Resource Include="images\filterRadioBoxes\van.png" />
+    <Resource Include="images\filterRadioBoxes\car.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cars\ford-focus-red.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -31,8 +31,28 @@ namespace Assignment1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //When the program is started up, this method is called
-            vehicleType.Add(new Vehicle() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 50000, Description = "That's some good shtuff!" });
+            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 50000, Description = "That's some good shtuff!" });
+            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 50000, Description = "That's some really good shtuff!" });
+            vehicleType.Add(new Van() { Make = "Toyoda", Model = "Vaaaan", Price = 8520, Year = 2047, Colour = "Blue", Mileage = 50000, Description = "That's some extra good shtuff!" });
+
             lbxDisplay.ItemsSource = vehicleType;
+        }
+
+        private void lbxDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
+
+            //When the selectedVehicle is not null
+            if (selectedVehicle != null)
+            {
+
+                tblVehicleDisplay.Text = "Make: " + selectedVehicle.Make +
+                                        "\nModel: " + selectedVehicle.Model +
+                                        "\nPrice:  " + selectedVehicle.Price +
+                                        "\nYear: " + selectedVehicle.Year +
+                                        "\nMileage: " + selectedVehicle.Mileage +
+                                        "\nDescription: " + selectedVehicle.Description;
+            }
         }
     }
 }

@@ -34,10 +34,20 @@ namespace Assignment1
             this.Description = description;
             //Also image in here too
         }
+    }
 
-        public override string ToString()
-        {
-            return "Make: " + Make + " " + "Model: " + Model;
-        }
+    class Car : Vehicle
+    {
+
+    }
+
+    class Bike: Vehicle
+    {
+
+    }
+
+    class Van: Vehicle
+    {
+
     }
 }
