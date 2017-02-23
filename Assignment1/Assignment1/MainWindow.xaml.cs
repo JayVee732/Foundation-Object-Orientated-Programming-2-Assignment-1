@@ -23,7 +23,7 @@ namespace Assignment1
     {
         //Creation of list for use with program
         List<Vehicle> vehicleType = new List<Vehicle>();
-        List<Vehicle> filteredVehicles = new List<Vehicle>();
+        IEnumerable<Vehicle> filteredVehicles = new List<Vehicle>();
         List<Car> carType = new List<Car> ();
         List<Bike> bikeType = new List<Bike>();
         List<Van> vanType = new List<Van>();
@@ -35,8 +35,8 @@ namespace Assignment1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //When the program is started up, this method is called
-            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 50000, Description = "That's some good shtuff!", Image = "/images/cars/ford-focus-red.jpg", BodyType = "Hatchback" });
-            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 50000, Description = "That's some really good shtuff!", Image = "/images/bikes/ford-bike-black.jpg", Type = "Sports" });
+            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 25000, Description = "That's some good shtuff!", Image = "/images/cars/ford-focus-red.jpg", BodyType = "Hatchback" });
+            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 150000, Description = "That's some really good shtuff!", Image = "/images/bikes/ford-bike-black.jpg", Type = "Sports" });
             vehicleType.Add(new Van() { Make = "Toyoda", Model = "Vaaaan", Price = 8520, Year = 2047, Colour = "Blue", Mileage = 50000, Description = "That's some extra good shtuff!", Image = "/images/vans/ford-van-white.png", Wheelbase = "Medium", Type = "Combi Van" });
 
             lbxDisplay.ItemsSource = vehicleType;
@@ -133,57 +133,28 @@ namespace Assignment1
         #endregion
 
         #region Sorting with Combo Box
-        //Get any of this shit working 
+
         private void cbxSortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lbxDisplay.ItemsSource = "";
-            filteredVehicles.Clear();
+            filteredVehicles.Equals("");
             string sortedBy = cbxSortBy.SelectedValue.ToString();
 
-            //Change this to a switch statement
-            if (sortedBy.Equals("Price"))
+            switch (sortedBy)
             {
-                SortNumbers();
-                lbxDisplay.ItemsSource = filteredVehicles;
+                case "Make":
+                    filteredVehicles = vehicleType.OrderBy(i => i.Make);
+                    break;
+                case "Mileage":
+                    filteredVehicles = vehicleType.OrderBy(i => i.Mileage);
+                    break;
+                case "Price":
+                    filteredVehicles = vehicleType.OrderBy(i => i.Price);
+                    break;
             }
 
-            else if (sortedBy.Equals("Mileage"))
-            {
-                SortNumbers();
-                lbxDisplay.ItemsSource = filteredVehicles;
-            }
-
-            else if (sortedBy.Equals("Make"))
-            {
-                SortLetters();
-                lbxDisplay.ItemsSource = filteredVehicles;
-            }
+            lbxDisplay.ItemsSource = filteredVehicles;
         }
-
-        private void SortNumbers()
-        {
-            foreach (var vehicle in vehicleType)
-            {
-
-            }
-        }
-        private void SortLetters()
-        {
-
-        }
-
-        //private void SortedVehicles(string sortedBy)
-        //{
-        //    foreach (var vehicle in vehicleType)
-        //    {
-        //        string type = vehicleType.GetType().Name;
-
-        //        if (type.Equals(sortedBy))
-        //        {
-        //            filteredVehicles.Add(vehicle);
-        //        }
-        //    }
-        //}
         #endregion
 
         #region Buttons for Other Windows
