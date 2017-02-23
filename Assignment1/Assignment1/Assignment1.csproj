@@ -55,7 +55,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddVehicle.xaml.cs">
+      <DependentUpon>AddVehicle.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditVehicle.xaml.cs">
+      <DependentUpon>EditVehicle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vehicle.cs" />
+    <Page Include="AddVehicle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditVehicle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -104,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\cars\ford-focus-red.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\bikes\ford-bike-black.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\vans\ford-van-white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

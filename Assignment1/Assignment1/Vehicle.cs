@@ -16,14 +16,14 @@ namespace Assignment1
         public string Colour { get; set; }
         public int Mileage { get; set; }
         public string Description { get; set; }
-        //Add in image constructor
-        
+        public string Image { get; set; }
+
         //Default Constructor
         public Vehicle()
         {
         }
 
-        public Vehicle(string make, string model, double price, int year, string colour, int mileage, string description)
+        public Vehicle(string make, string model, double price, int year, string colour, int mileage, string description, string image)
         {
             this.Make = make;
             this.Model = model;
@@ -32,22 +32,50 @@ namespace Assignment1
             this.Colour = colour;
             this.Mileage = mileage;
             this.Description = description;
-            //Also image in here too
+            this.Image = image;
         }
     }
 
     class Car : Vehicle
     {
+        public string BodyType { get; set; }
 
+        public Car()
+        {
+        }
+
+        public Car(string bodyType)
+        {
+            this.BodyType = bodyType;
+        }
     }
 
     class Bike: Vehicle
     {
+        public string Type { get; set; }
 
+        public Bike()
+        {
+        }
+
+        public Bike(string type)
+        {
+            this.Type = type;
+        }
     }
 
     class Van: Vehicle
     {
+        public string Wheelbase { get; set; }
+        public string Type { get; set; }
+        public Van()
+        {
+        }
 
+        public Van(string wheelbase, string type)
+        {
+            this.Wheelbase = wheelbase;
+            this.Type = type;
+        }
     }
 }
