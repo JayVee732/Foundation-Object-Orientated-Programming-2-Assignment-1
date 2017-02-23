@@ -27,6 +27,7 @@ namespace Assignment1
         List<Car> carType = new List<Car> ();
         List<Bike> bikeType = new List<Bike>();
         List<Van> vanType = new List<Van>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,9 +36,9 @@ namespace Assignment1
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //When the program is started up, this method is called
-            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 25000, Description = "That's some good shtuff!", Image = "/images/cars/ford-focus-red.jpg", BodyType = "Hatchback" });
-            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 150000, Description = "That's some really good shtuff!", Image = "/images/bikes/ford-bike-black.jpg", Type = "Sports" });
-            vehicleType.Add(new Van() { Make = "Toyoda", Model = "Vaaaan", Price = 8520, Year = 2047, Colour = "Blue", Mileage = 50000, Description = "That's some extra good shtuff!", Image = "/images/vans/ford-van-white.png", Wheelbase = "Medium", Type = "Combi Van" });
+            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 25000, Description = "That's some good shtuff!", Image = "/images/vehicles/cars/ford-focus-red.jpg", BodyType = "Hatchback" });
+            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 150000, Description = "That's some really good shtuff!", Image = "/images/vehicles/bikes/ford-bike-black.jpg", Type = "Sports" });
+            vehicleType.Add(new Van() { Make = "Toyoda", Model = "Vaaaan", Price = 8520, Year = 2047, Colour = "Blue", Mileage = 50000, Description = "That's some extra good shtuff!", Image = "/images/vehicles/vans/ford-van-white.png", Wheelbase = "Medium", Type = "Combi Van" });
 
             lbxDisplay.ItemsSource = vehicleType;
             //Values to sort by
@@ -158,6 +159,7 @@ namespace Assignment1
         #endregion
 
         #region Buttons for Other Windows
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             AddVehicle addVeh = new AddVehicle();

@@ -117,13 +117,13 @@
     <Resource Include="images\filterRadioBoxes\car.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\cars\ford-focus-red.jpg" />
+    <Resource Include="images\vehicles\cars\ford-focus-red.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\bikes\ford-bike-black.jpg" />
+    <Resource Include="images\vehicles\bikes\ford-bike-black.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\vans\ford-van-white.png" />
+    <Resource Include="images\vehicles\vans\ford-van-white.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

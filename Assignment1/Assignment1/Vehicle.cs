@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    //Add in addition classes
     abstract class Vehicle
     {
         public string Make { get; set; }
@@ -68,6 +67,7 @@ namespace Assignment1
     {
         public string Wheelbase { get; set; }
         public string Type { get; set; }
+
         public Van()
         {
         }
