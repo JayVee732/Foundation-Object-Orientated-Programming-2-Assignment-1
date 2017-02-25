@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,12 +36,6 @@ namespace Assignment1
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //When the program is started up, this method is called
-            vehicleType.Add(new Car() { Make = "Ford", Model = "Focus", Price = 10000, Year = 2010, Colour = "Red", Mileage = 25000, Description = "That's some good shtuff!", Image = "/images/vehicles/cars/ford-focus-red.jpg", BodyType = "Hatchback" });
-            vehicleType.Add(new Bike() { Make = "Ford", Model = "Bikirio", Price = 50000, Year = 1957, Colour = "Green", Mileage = 150000, Description = "That's some really good shtuff!", Image = "/images/vehicles/bikes/ford-bike-black.jpg", Type = "Sports" });
-            vehicleType.Add(new Van() { Make = "Toyoda", Model = "Vaaaan", Price = 8520, Year = 2047, Colour = "Blue", Mileage = 50000, Description = "That's some extra good shtuff!", Image = "/images/vehicles/vans/ford-van-white.png", Wheelbase = "Medium", Type = "Combi Van" });
-
-            lbxDisplay.ItemsSource = vehicleType;
             //Values to sort by
             string[] sortBy = { "Make", "Mileage", "Price" };
             cbxSortBy.ItemsSource = sortBy;
@@ -64,6 +59,7 @@ namespace Assignment1
                                         "\nYear: " + selectedVehicle.Year +
                                         "\nMileage: " + selectedVehicle.Mileage +
                                         "\nDescription: " + selectedVehicle.Description;
+
                 //Sets the images associated with the vehicle
                 imgVehicle.Source = new BitmapImage(new Uri(selectedVehicle.Image, UriKind.Relative));
             }
@@ -172,5 +168,52 @@ namespace Assignment1
             editVeh.Show();
         }
         #endregion
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader("./vehicleData/vehicleData.txt"))
+                {
+                    string vehicle = sr.ReadLine();
+
+                    while (vehicle != null)
+                    {
+                        string[] newVehicle = vehicle.Split(',');
+                        string checkVehicle = newVehicle[0];
+
+                        switch (checkVehicle)
+                        {
+                            case "Car":
+                                vehicleType.Add(new Car() { Make = newVehicle[1], Model = newVehicle[2], Price = double.Parse(newVehicle[3]), Year = int.Parse(newVehicle[4]), Colour = newVehicle[5], Mileage = int.Parse(newVehicle[6]), Description = newVehicle[7], Image = newVehicle[8], BodyType = newVehicle[9] });
+
+                                newVehicle = null;
+                                vehicle = sr.ReadLine();
+                                break;
+                            case "Bike":
+                                vehicleType.Add(new Bike() { Make = newVehicle[1], Model = newVehicle[2], Price = double.Parse(newVehicle[3]), Year = int.Parse(newVehicle[4]), Colour = newVehicle[5], Mileage = int.Parse(newVehicle[6]), Description = newVehicle[7], Image = newVehicle[8], Type = newVehicle[9] });
+
+                                newVehicle = null;
+                                vehicle = sr.ReadLine();
+                                break;
+                            case "Van":
+                                vehicleType.Add(new Van() { Make = newVehicle[1], Model = newVehicle[2], Price = double.Parse(newVehicle[3]), Year = int.Parse(newVehicle[4]), Colour = newVehicle[5], Mileage = int.Parse(newVehicle[6]), Description = newVehicle[7], Image = newVehicle[8], Wheelbase = newVehicle[9], Type = newVehicle[10] });
+
+                                newVehicle = null;
+                                vehicle = sr.ReadLine();
+                                break;
+                        }
+                    }
+                }
+
+            }
+            catch (FormatException fe)
+            {
+                MessageBox.Show(fe.Message);
+                throw;
+            }
+
+            lbxDisplay.ItemsSource = vehicleType;
+        }
     }
 }
