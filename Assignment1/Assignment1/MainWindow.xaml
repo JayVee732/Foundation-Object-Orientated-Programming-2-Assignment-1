@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="Car Application" Height="420" Width="620" ResizeMode="NoResize" Language="en-IE" Loaded="Window_Loaded">
+        Title="Car Application" Height="420" Width="620" Language="en-IE" Loaded="Window_Loaded">
 
     <Window.Resources>
         <DataTemplate x:Key="listboxTemplate">
@@ -86,7 +86,7 @@
             <Button Name="btnSave" Content="Save" Height="25" Width="75" FontSize="12" Margin="10" />
             <Button Name="btnAdd" Content="Add" Height="25" Width="75" FontSize="12" Margin="10" Click="btnAdd_Click" />
             <Button Name="btnEdit" Content="Edit" Height="25" Width="75" FontSize="12" Margin="10" Click="btnEdit_Click" />
-            <Button Name="btnDelete" Content="Delete" Height="25" Width="75" FontSize="12" Margin="10" />
+            <Button Name="btnDelete" Content="Delete" Height="25" Width="75" FontSize="12" Margin="10" Click="btnDelete_Click" />
         </StackPanel>
     </Grid>
 </Window>

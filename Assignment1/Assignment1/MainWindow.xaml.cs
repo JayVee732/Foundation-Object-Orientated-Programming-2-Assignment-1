@@ -215,5 +215,24 @@ namespace Assignment1
 
             lbxDisplay.ItemsSource = vehicleType;
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
+            //FileStream fs = new FileStream("./vehicleData/vehicleData.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this vehicle?", "Delete Vehicle?", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                if (selectedVehicle != null)
+                {
+                    vehicleType.Remove(selectedVehicle);
+                }
+            }
+
+            tblVehicleDisplay.Text = "";
+            imgVehicle.Source = null;
+            lbxDisplay.ItemsSource = vehicleType;
+        }
     }
 }
