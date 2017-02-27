@@ -20,54 +20,51 @@ namespace Assignment1
     /// </summary>
     public partial class EditVehicle : Window
     {
-        string imageDirectory;
-
+        public Vehicle currentVehicle = Application.Current.Properties["currentVehicle"] as Vehicle;
         public EditVehicle()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Close();
-        }
-
-        //Not tested
-        private void btnImage_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Filter = "Images (*.JPG;*.JPEG;*.PNG) | *.JPG;*.JPEG;*.PNG";
-
-            Nullable<bool> result = dlg.ShowDialog();
-            string sourceFile = "";
-            string fileName = "";
-
-            if (result == true)
+            try
             {
-                sourceFile = dlg.FileName;
-                fileName = sourceFile.Substring(sourceFile.LastIndexOf('\\'));
+                if (currentVehicle != null)
+                {
+                    tbxMake.Text = currentVehicle.Make;
+                    tbxModel.Text = currentVehicle.Model;
+                    tbxPrice.Text = currentVehicle.Price.ToString();
+                    tbxYear.Text = currentVehicle.Year.ToString();
+                    tbxColour.Text = currentVehicle.Colour;
+                    tbxMileage.Text = currentVehicle.Mileage.ToString();
+                    tbxDescription.Text = currentVehicle.Description;
+                }
             }
+            catch (Exception)
+            {
 
-            string destinationFile = imageDirectory + fileName;
-            File.Copy(sourceFile, destinationFile);
-        }
-
-        private void SetImageDirectory()
-        {
-            string currentDirectory = Directory.GetCurrentDirectory();
-
-            DirectoryInfo parent = Directory.GetParent(currentDirectory);
-
-            DirectoryInfo grandparent = parent.Parent;
-
-            currentDirectory = grandparent.FullName;
-
-            imageDirectory = currentDirectory + "\\images";
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             //Work more on this
+            string make = tbxMake.Text;
+            string model = tbxModel.Text;
+            double price = double.Parse(tbxPrice.Text);
+            int year = int.Parse(tbxYear.Text);
+            string colour = tbxColour.Text;
+            int mileage = int.Parse(tbxMileage.Text);
+            string description = tbxDescription.Text;
+
+            MainWindow main = this.Owner as MainWindow;
+            //main.vehicleType.Add()
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

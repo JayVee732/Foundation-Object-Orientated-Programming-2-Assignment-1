@@ -23,7 +23,7 @@ namespace Assignment1
     public partial class MainWindow : Window
     {
         //Creation of list for use with program
-        List<Vehicle> vehicleType = new List<Vehicle>();
+        public List<Vehicle> vehicleType = new List<Vehicle>();
         IEnumerable<Vehicle> filteredVehicles = new List<Vehicle>();
         List<Car> carType = new List<Car> ();
         List<Bike> bikeType = new List<Bike>();
@@ -32,6 +32,7 @@ namespace Assignment1
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -164,8 +165,22 @@ namespace Assignment1
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
-            EditVehicle editVeh = new EditVehicle();
-            editVeh.Show();
+            Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
+            try
+            {
+                if (selectedVehicle != null)
+                {
+                    Application.Current.Properties["currentVehicle"] = selectedVehicle;
+                    EditVehicle editVeh = new EditVehicle();
+                    editVeh.Owner = this;
+                    editVeh.Show();
+                }
+            }
+            catch (Exception fe)
+            {
+                MessageBox.Show(fe.Message);
+                throw;
+            }
         }
         #endregion
 
@@ -207,10 +222,9 @@ namespace Assignment1
                 }
 
             }
-            catch (FormatException fe)
+            catch (Exception fe)
             {
                 MessageBox.Show(fe.Message);
-                throw;
             }
 
             lbxDisplay.ItemsSource = vehicleType;
@@ -218,8 +232,12 @@ namespace Assignment1
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            //Kinda works? Won't load it back in again, but messes with filtering and the like
+
             Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
-            //FileStream fs = new FileStream("./vehicleData/vehicleData.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream fs = new FileStream("./vehicleData/vehicleData.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            StreamReader sr = new StreamReader(fs);
+            StreamWriter sw = new StreamWriter(fs);
 
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this vehicle?", "Delete Vehicle?", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -227,12 +245,32 @@ namespace Assignment1
                 if (selectedVehicle != null)
                 {
                     vehicleType.Remove(selectedVehicle);
+                    lbxDisplay.ItemsSource = null;
+                    lbxDisplay.ItemsSource = vehicleType;
+
+                    string vehicle = sr.ReadLine();
+
+                    while (vehicle != null)
+                    {
+                        string[] newVehicle = vehicle.Split(',');
+
+                        if (selectedVehicle.Make == newVehicle[1] && selectedVehicle.Mileage == int.Parse(newVehicle[6]))
+                        {
+                            sw.WriteLine("");
+                            newVehicle = null;
+                            vehicle = sr.ReadLine();
+                        }
+                        else
+                        {
+                            newVehicle = null;
+                            vehicle = sr.ReadLine();
+                        }
+                    }
                 }
             }
 
             tblVehicleDisplay.Text = "";
             imgVehicle.Source = null;
-            lbxDisplay.ItemsSource = vehicleType;
         }
     }
 }

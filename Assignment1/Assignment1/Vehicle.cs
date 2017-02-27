@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1
 {
-    abstract class Vehicle
+    abstract public class Vehicle
     {
         public string Make { get; set; }
         public string Model { get; set; }

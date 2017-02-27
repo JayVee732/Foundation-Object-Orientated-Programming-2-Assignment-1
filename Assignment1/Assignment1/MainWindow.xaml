@@ -11,6 +11,7 @@
         <DataTemplate x:Key="listboxTemplate">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
+                    <!-- Add colour to this (Background colour and pad it) -->
                     <TextBlock Text="Make: " FontWeight="Bold" />
                     <TextBlock Text="{Binding Make}" />
 

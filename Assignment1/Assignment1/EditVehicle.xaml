@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="Edit Vehicle" Height="470" Width="270">
+        Title="Edit Vehicle" Height="470" Width="270" Loaded="Window_Loaded">
     <Grid>
         <!-- Lots to do, resizing everything -->
         <Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
         <TextBox Name="tbxDescription" Grid.Row="9" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" />
 
         <Label Content="Image" Grid.Row="11"/>
-        <Button Name="btnImage" Content="Select Image" Grid.Column="1" Grid.Row="11" Margin="5" Click="btnImage_Click" />
+        <Button Name="btnImage" Content="Select Image" Grid.Column="1" Grid.Row="11" Margin="5" />
 
         <StackPanel Grid.Row="14" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Name="btnAdd" Content="Add" Height="20" Width="75" FontSize="12" Margin="0, 0, 15, 0" IsDefault="True" Click="btnAdd_Click"></Button>
