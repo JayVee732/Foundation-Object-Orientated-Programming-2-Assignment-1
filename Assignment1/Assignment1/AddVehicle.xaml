@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="Add Vehicle" Height="300" Width="300">
+        Title="Add Vehicle" Height="470" Width="270" Loaded="Window_Loaded">
     <Grid>
-        
+        <!-- Lots to do, resizing everything -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width= "*"/>
+            <ColumnDefinition Width= "115"/>
+            <ColumnDefinition Width= "*"/>
+        </Grid.ColumnDefinitions>
+        <!-- May need to change the number of rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Top Label -->
+        <Label Content="Editing Vehicle" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="13" />
+
+        <Label Content="Make" Grid.Row="1"/>
+        <TextBox Name="tbxMake" Grid.Row="1" Grid.Column="1" Margin="3"/>
+
+        <Label Content="Model" Grid.Row="2"/>
+        <TextBox Name="tbxModel" Grid.Row="2" Grid.Column="1" Margin="3" />
+
+        <Label Content="Price" Grid.Row="3"/>
+        <TextBox Name="tbxPrice" Grid.Row="3" Grid.Column="1" Margin="3" />
+
+        <Label Content="Year" Grid.Row="4"/>
+        <TextBox Name="tbxYear" Grid.Row="4" Grid.Column="1" Margin="3" />
+
+        <Label Content="Colour" Grid.Row="5"/>
+        <TextBox Name="tbxColour" Grid.Row="5" Grid.Column="1" Margin="3" />
+
+        <Label Content="Mileage" Grid.Row="6"/>
+        <TextBox Name="tbxMileage" Grid.Row="6" Grid.Column="1" Margin="3" />
+
+        <Label Content="Type" Grid.Row="7"/>
+        <ComboBox Name="cbxType" Grid.Row="7" Grid.Column="1" Margin="3" />
+
+        <Label Content="Body Type" Grid.Row="8"/>
+        <ComboBox Name="cbxBodyType" Grid.Row="8" Grid.Column="1" Margin="3" />
+
+        <Label Content="Description" Grid.Row="9"/>
+        <TextBox Name="tbxDescription" Grid.Row="9" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" />
+
+        <Label Content="Image" Grid.Row="11"/>
+        <Button Name="btnImage" Content="Select Image" Grid.Column="1" Grid.Row="11" Margin="5" Click="btnImage_Click" />
+
+        <Label Content="Wheelbase" Grid.Row="13"/>
+        <ComboBox Name="cbxWheelbase" Grid.Row="13" Grid.Column="1" Margin="3" />
+
+        <Label Content="Vehicle Type" Grid.Row="14"/>
+        <ComboBox Name="cbxVehicleType" Grid.Row="14" Grid.Column="1" Margin="3" SelectionChanged="cbxVehicleType_SelectionChanged" />
+
+        <StackPanel Grid.Row="16" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Name="btnAdd" Content="Add" Width="75" FontSize="12" Margin="0,4,15,3" IsDefault="True" Click="btnAdd_Click" />
+            <Button Name="btnCancel" Content="Cancel" Height="20" Width="75" FontSize="12" Click="btnCancel_Click" ></Button>
+        </StackPanel>
     </Grid>
 </Window>

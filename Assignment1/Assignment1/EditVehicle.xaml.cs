@@ -57,9 +57,22 @@ namespace Assignment1
             string colour = tbxColour.Text;
             int mileage = int.Parse(tbxMileage.Text);
             string description = tbxDescription.Text;
+            
+            make = currentVehicle.Make;
+            model = currentVehicle.Model;
+            price = currentVehicle.Price;
+            year = currentVehicle.Year;
+            colour = currentVehicle.Colour;
+            mileage = currentVehicle.Mileage;
+            description = currentVehicle.Description;
 
             MainWindow main = this.Owner as MainWindow;
-            //main.vehicleType.Add()
+            
+            main.vehicleType.Add(currentVehicle);
+            main.lbxDisplay.ItemsSource = null;
+            main.lbxDisplay.ItemsSource = main.vehicleType;
+
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

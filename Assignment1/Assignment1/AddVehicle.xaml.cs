@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,156 @@ namespace Assignment1
     /// </summary>
     public partial class AddVehicle : Window
     {
+        string imageDirectory;
+        string sourceFile = "";
+        string fileName = "";
         public AddVehicle()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            string[] vehicleType = { "Car", "Bike", "Van" };
+            cbxVehicleType.ItemsSource = vehicleType;
+            cbxVehicleType.SelectedIndex = 0;
+            
+            cbxType.IsEnabled = false;
+            cbxWheelbase.IsEnabled = false;
+
+            SetImageDirectory();
+        }
+
+        private void cbxVehicleType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string vehicleTypeSelected = cbxVehicleType.SelectedValue.ToString();
+
+            //Get combo boxes to not be usable properly, almost there
+            if (vehicleTypeSelected == "Car")
+            {
+                string[] carBodyType = { "Convertible", "Hatchback", "Coupe", "Estate", "MPV", "SUV", "Saloon", "Unlisted" };
+                cbxBodyType.ItemsSource = carBodyType;
+                cbxBodyType.SelectedIndex = 0;
+                cbxBodyType.IsEnabled = true;
+
+                cbxType.IsEnabled = false;
+                cbxType.SelectedIndex = -1;
+
+                cbxWheelbase.IsEnabled = false;
+                cbxWheelbase.SelectedIndex = -1;
+            }
+
+            else if (vehicleTypeSelected == "Bike")
+            {
+                string[] bikeType = { "Scooter", "Trail Bike", "Sport", "Commuter", "Tourer", "Unlisted" };
+                cbxType.ItemsSource = bikeType;
+                cbxType.SelectedIndex = 0;
+
+                cbxType.IsEnabled = true;
+                cbxBodyType.IsEnabled = false;
+                cbxBodyType.SelectedIndex = -1;
+                cbxWheelbase.IsEnabled = false;
+                cbxWheelbase.SelectedIndex = -1;
+            }
+
+            else if (vehicleTypeSelected == "Van")
+            {
+                string[] wheelbase = { "Short", "Medium", "Long", "Unlisted" };
+                cbxWheelbase.ItemsSource = wheelbase;
+                cbxWheelbase.SelectedIndex = 0;
+
+                string[] vanType = { "Combi Van", "Dropside", "Panel Van", "Pcikup", "Tipper", "Unlisted" };
+                cbxType.ItemsSource = vanType;
+                cbxType.SelectedIndex = 0;
+
+                cbxType.IsEnabled = true;
+                cbxWheelbase.IsEnabled = true;
+                cbxBodyType.IsEnabled = false;
+                cbxBodyType.SelectedIndex = -1;
+            }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = this.Owner as MainWindow;
+            string newVehicle = cbxVehicleType.SelectedValue.ToString();
+
+            string make = tbxMake.Text;
+            string model = tbxModel.Text;
+            double price = double.Parse(tbxPrice.Text);
+            int year = int.Parse(tbxYear.Text);
+            string colour = tbxColour.Text;
+            int mileage = int.Parse(tbxMileage.Text);
+            string description = tbxDescription.Text;
+            string image;
+            string bodyType;
+
+            switch (newVehicle)
+            {
+                case "Car":
+                    image = sourceFile.ToString();
+                    bodyType = cbxBodyType.Text;
+                    main.vehicleType.Add(new Car() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, BodyType = bodyType });
+                    break;
+                case "Bike":
+                    string bikeType = cbxType.ToString();
+                    main.vehicleType.Add(new Bike() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Type = bikeType });
+                    break;
+                case "Van":
+                    string vanType = cbxType.ToString();
+                    string wheelbase = cbxWheelbase.ToString();
+                    main.vehicleType.Add(new Van() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Type = vanType, Wheelbase = wheelbase });
+                    break;
+            }
+            
+            main.lbxDisplay.ItemsSource = null;
+            main.lbxDisplay.ItemsSource = main.vehicleType;
+
+            this.Close();
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Images (*.JPG;*.JPEG;*.PNG) | *.JPG;*.JPEG;*.PNG";
+            Nullable<bool> result = dlg.ShowDialog();
+            try
+            {
+                if (result == true)
+                {
+                    sourceFile = dlg.FileName;
+                    fileName = sourceFile.Substring(sourceFile.LastIndexOf('\\'));
+                    //tbxFileName.Text = sourceFile;
+                }
+            }
+
+            catch (IOException ioe)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Original error: " + ioe.Message);
+            }
+
+            string destinationFile = imageDirectory + fileName;
+
+            File.Copy(sourceFile, destinationFile);            
+        }
+        
+        private void SetImageDirectory()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+
+            DirectoryInfo parent = Directory.GetParent(currentDirectory);
+
+            DirectoryInfo grandparent = parent.Parent;
+
+            currentDirectory = grandparent.FullName;
+
+            imageDirectory = currentDirectory + "\\images/vehicles";
         }
     }
 }
