@@ -23,6 +23,7 @@ namespace Assignment1
         string imageDirectory;
         string sourceFile = "";
         string fileName = "";
+        string destinationFile = "";
         public AddVehicle()
         {
             InitializeComponent();
@@ -41,11 +42,19 @@ namespace Assignment1
             SetImageDirectory();
         }
 
+        private void SetImageDirectory()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo parent = Directory.GetParent(currentDirectory);
+            DirectoryInfo grandparent = parent.Parent;
+            currentDirectory = grandparent.FullName;
+            imageDirectory = currentDirectory + "\\images/vehicles";
+        }
+
         private void cbxVehicleType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string vehicleTypeSelected = cbxVehicleType.SelectedValue.ToString();
-
-            //Get combo boxes to not be usable properly, almost there
+            
             if (vehicleTypeSelected == "Car")
             {
                 string[] carBodyType = { "Convertible", "Hatchback", "Coupe", "Estate", "MPV", "SUV", "Saloon", "Unlisted" };
@@ -90,53 +99,60 @@ namespace Assignment1
             }
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = this.Owner as MainWindow;
-            string newVehicle = cbxVehicleType.SelectedValue.ToString();
-
-            string make = tbxMake.Text;
-            string model = tbxModel.Text;
-            double price = double.Parse(tbxPrice.Text);
-            int year = int.Parse(tbxYear.Text);
-            string colour = tbxColour.Text;
-            int mileage = int.Parse(tbxMileage.Text);
-            string description = tbxDescription.Text;
-            string image;
-            string bodyType;
-
-            switch (newVehicle)
+            try
             {
-                case "Car":
-                    image = sourceFile.ToString();
-                    bodyType = cbxBodyType.Text;
-                    main.vehicleType.Add(new Car() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, BodyType = bodyType });
-                    break;
-                case "Bike":
-                    string bikeType = cbxType.ToString();
-                    main.vehicleType.Add(new Bike() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Type = bikeType });
-                    break;
-                case "Van":
-                    string vanType = cbxType.ToString();
-                    string wheelbase = cbxWheelbase.ToString();
-                    main.vehicleType.Add(new Van() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Type = vanType, Wheelbase = wheelbase });
-                    break;
-            }
-            
-            main.lbxDisplay.ItemsSource = null;
-            main.lbxDisplay.ItemsSource = main.vehicleType;
+                MainWindow main = this.Owner as MainWindow;
+                string newVehicle = cbxVehicleType.SelectedValue.ToString();
 
-            this.Close();
+                string make = tbxMake.Text;
+                string model = tbxModel.Text;
+                double price = double.Parse(tbxPrice.Text);
+                int year = int.Parse(tbxYear.Text);
+                string colour = tbxColour.Text;
+                int mileage = int.Parse(tbxMileage.Text);
+                string description = tbxDescription.Text;
+                string image = "/images/vehicles/" + fileName.Replace("\\", "").ToString();
+
+                string bodyType;
+                string type;
+                string wheelbase;
+
+                switch (newVehicle)
+                {
+                    case "Car":
+                        bodyType = cbxBodyType.SelectedValue.ToString();
+                        main.vehicleType.Add(new Car() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, BodyType = bodyType });
+                        break;
+                    case "Bike":
+                        type = cbxType.SelectedValue.ToString();
+                        main.vehicleType.Add(new Bike() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, Type = type });
+                        break;
+                    case "Van":
+                        type = cbxType.SelectedValue.ToString();
+                        wheelbase = cbxWheelbase.SelectedValue.ToString();
+                        main.vehicleType.Add(new Van() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, Type = type, Wheelbase = wheelbase });
+                        break;
+                }
+            
+                main.lbxDisplay.ItemsSource = null;
+                main.lbxDisplay.ItemsSource = main.vehicleType;
+
+                this.Close();
+            }
+
+            catch (FormatException)
+            {
+                MessageBox.Show("Error - All boxes must be filled");
+            }
         }
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Title = "Select Vehicle Image";
             dlg.Filter = "Images (*.JPG;*.JPEG;*.PNG) | *.JPG;*.JPEG;*.PNG";
             Nullable<bool> result = dlg.ShowDialog();
             try
@@ -145,7 +161,6 @@ namespace Assignment1
                 {
                     sourceFile = dlg.FileName;
                     fileName = sourceFile.Substring(sourceFile.LastIndexOf('\\'));
-                    //tbxFileName.Text = sourceFile;
                 }
             }
 
@@ -154,22 +169,26 @@ namespace Assignment1
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + ioe.Message);
             }
 
-            string destinationFile = imageDirectory + fileName;
 
-            File.Copy(sourceFile, destinationFile);            
+            try
+            {
+                destinationFile = imageDirectory + fileName;
+                if (File.Exists(destinationFile))
+                {
+                    File.Delete(destinationFile);
+                }
+                File.Copy(sourceFile, destinationFile);
+
+            }
+            catch (Exception fe)
+            {
+                MessageBox.Show("Error: Image needed for vehicle. Original Error: " + fe.Message);
+            }         
         }
-        
-        private void SetImageDirectory()
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            string currentDirectory = Directory.GetCurrentDirectory();
-
-            DirectoryInfo parent = Directory.GetParent(currentDirectory);
-
-            DirectoryInfo grandparent = parent.Parent;
-
-            currentDirectory = grandparent.FullName;
-
-            imageDirectory = currentDirectory + "\\images/vehicles";
+            this.Close();
         }
     }
 }

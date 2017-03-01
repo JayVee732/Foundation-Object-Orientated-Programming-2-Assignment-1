@@ -20,7 +20,8 @@ namespace Assignment1
     /// </summary>
     public partial class EditVehicle : Window
     {
-        public Vehicle currentVehicle = Application.Current.Properties["currentVehicle"] as Vehicle;
+        public Vehicle selectedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
+        public Vehicle editedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
         public EditVehicle()
         {
             InitializeComponent();
@@ -30,15 +31,15 @@ namespace Assignment1
         {
             try
             {
-                if (currentVehicle != null)
+                if (selectedVehicle != null)
                 {
-                    tbxMake.Text = currentVehicle.Make;
-                    tbxModel.Text = currentVehicle.Model;
-                    tbxPrice.Text = currentVehicle.Price.ToString();
-                    tbxYear.Text = currentVehicle.Year.ToString();
-                    tbxColour.Text = currentVehicle.Colour;
-                    tbxMileage.Text = currentVehicle.Mileage.ToString();
-                    tbxDescription.Text = currentVehicle.Description;
+                    tbxMake.Text = selectedVehicle.Make;
+                    tbxModel.Text = selectedVehicle.Model;
+                    tbxPrice.Text = selectedVehicle.Price.ToString();
+                    tbxYear.Text = selectedVehicle.Year.ToString();
+                    tbxColour.Text = selectedVehicle.Colour;
+                    tbxMileage.Text = selectedVehicle.Mileage.ToString();
+                    tbxDescription.Text = selectedVehicle.Description;
                 }
             }
             catch (Exception)
@@ -49,7 +50,6 @@ namespace Assignment1
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //Work more on this
             string make = tbxMake.Text;
             string model = tbxModel.Text;
             double price = double.Parse(tbxPrice.Text);
@@ -58,20 +58,29 @@ namespace Assignment1
             int mileage = int.Parse(tbxMileage.Text);
             string description = tbxDescription.Text;
             
-            make = currentVehicle.Make;
-            model = currentVehicle.Model;
-            price = currentVehicle.Price;
-            year = currentVehicle.Year;
-            colour = currentVehicle.Colour;
-            mileage = currentVehicle.Mileage;
-            description = currentVehicle.Description;
+            editedVehicle.Make = make;
+            editedVehicle.Model = model;
+            editedVehicle.Price = price;
+            editedVehicle.Year = year;
+            editedVehicle.Colour = colour;
+            editedVehicle.Mileage = mileage;
+            editedVehicle.Description = description;
 
             MainWindow main = this.Owner as MainWindow;
+
+            if (editedVehicle != selectedVehicle)
+            {
+                main.vehicleType.Remove(selectedVehicle);
+                main.vehicleType.Add(editedVehicle);
+                main.lbxDisplay.ItemsSource = null;
+                main.lbxDisplay.ItemsSource = main.vehicleType;
+            }
             
-            main.vehicleType.Add(currentVehicle);
             main.lbxDisplay.ItemsSource = null;
             main.lbxDisplay.ItemsSource = main.vehicleType;
 
+            main.tblVehicleDisplay.Text = "";
+            main.imgVehicle.Source = null;
             this.Close();
         }
 

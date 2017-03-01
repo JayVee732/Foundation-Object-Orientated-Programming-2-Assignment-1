@@ -1,3 +1,0 @@
-Car,Ford,focus,10000,2010,Red,25000,That's some good shtuff!,/images/vehicles/cars/ford-focus-red.jpg,Hatchback
-Bike,Ford,Bikirio,50000,1957,Green,156000,That's some really good shtuff!,/images/vehicles/bikes/ford-bike-black.jpg,Sports
-Van,Toyoda,Vaaan,8520,2047,Blue,5000,That's some extra good shtuff!,/images/vehicles/vans/ford-van-white.png,Medium,Combi Van

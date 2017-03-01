@@ -47,6 +47,11 @@ namespace Assignment1
         {
             this.BodyType = bodyType;
         }
+
+        public override string ToString()
+        {
+            return this.GetType().Name + "," + Make + "," + Model + "," + Price + "," + Year + "," + Colour + "," + Mileage + "," + Description + "," + Image + "," + BodyType;
+        }
     }
 
     class Bike: Vehicle
@@ -60,6 +65,11 @@ namespace Assignment1
         public Bike(string type)
         {
             this.Type = type;
+        }
+
+        public override string ToString()
+        {
+            return this.GetType().Name + "," + Make + "," + Model + "," + Price + "," + Year + "," + Colour + "," + Mileage + "," + Description + "," + Image + "," + Type;
         }
     }
 
@@ -76,6 +86,11 @@ namespace Assignment1
         {
             this.Wheelbase = wheelbase;
             this.Type = type;
+        }
+
+        public override string ToString()
+        {
+            return this.GetType().Name + "," + Make + "," + Model + "," + Price + "," + Year + "," + Colour + "," + Mileage + "," + Description + "," + Image + "," + Wheelbase + "," + Type;
         }
     }
 }

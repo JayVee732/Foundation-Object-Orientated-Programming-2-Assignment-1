@@ -155,39 +155,16 @@ namespace Assignment1
         }
         #endregion
 
-        #region Buttons for Other Windows
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            AddVehicle addVeh = new AddVehicle();
-            addVeh.Show();
-        }
-
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
-            try
-            {
-                if (selectedVehicle != null)
-                {
-                    Application.Current.Properties["currentVehicle"] = selectedVehicle;
-                    EditVehicle editVeh = new EditVehicle();
-                    editVeh.Owner = this;
-                    editVeh.Show();
-                }
-            }
-            catch (Exception fe)
-            {
-                MessageBox.Show(fe.Message);
-                throw;
-            }
-        }
-        #endregion
-
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        #region Bottom Buttons
+         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                lbxDisplay.ItemsSource = "";
+                vehicleType.Clear();
+                tblVehicleDisplay.Text = "";
+                imgVehicle.Source = null;
+
                 using (StreamReader sr = new StreamReader("./vehicleData/vehicleData.txt"))
                 {
                     string vehicle = sr.ReadLine();
@@ -219,15 +196,56 @@ namespace Assignment1
                                 break;
                         }
                     }
+                    sr.Close();
                 }
 
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                MessageBox.Show(fnfe.Message);
+            }
+
+            lbxDisplay.ItemsSource = vehicleType;
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            string[] vehicleList = new string[vehicleType.Count];
+            for (int i = 0; i < vehicleType.Count; i++)
+            {
+                vehicleList[i] = vehicleType[i].ToString();
+            }
+            File.WriteAllLines(@"./vehicleData/vehicleData.txt", vehicleList);
+
+            MessageBox.Show("File successfully saved");
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddVehicle addVeh = new AddVehicle();
+            addVeh.Owner = this;
+
+            addVeh.Show();
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
+            try
+            {
+                if (selectedVehicle != null)
+                {
+                    Application.Current.Properties["selectedVehicle"] = selectedVehicle;
+                    EditVehicle editVeh = new EditVehicle();
+                    editVeh.Owner = this;
+                    editVeh.Show();
+                }
             }
             catch (Exception fe)
             {
                 MessageBox.Show(fe.Message);
+                throw;
             }
-
-            lbxDisplay.ItemsSource = vehicleType;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -269,8 +287,12 @@ namespace Assignment1
                 }
             }
 
+            fs.Close();
+
             tblVehicleDisplay.Text = "";
             imgVehicle.Source = null;
         }
+
+        #endregion
     }
 }
