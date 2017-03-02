@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
         Title="Edit Vehicle" Height="470" Width="270" Loaded="Window_Loaded">
-    <Grid>
+    <Grid Background="Gray">
         <!-- Lots to do, resizing everything -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width= "*"/>

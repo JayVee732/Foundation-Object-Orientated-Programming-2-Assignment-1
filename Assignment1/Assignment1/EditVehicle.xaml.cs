@@ -25,6 +25,7 @@ namespace Assignment1
         string fileName = "";
         string destinationFile = "";
 
+        //Takes the selected vehicle twice to be compared
         public Vehicle selectedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
         public Vehicle editedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
         public EditVehicle()

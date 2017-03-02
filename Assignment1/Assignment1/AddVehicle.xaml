@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
         Title="Add Vehicle" Height="550" Width="300" Loaded="Window_Loaded">
-    <Grid>
-        <!-- Lots to do, resizing everything -->
+    <Grid Background="Gray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width= "*"/>
             <ColumnDefinition Width= "115"/>

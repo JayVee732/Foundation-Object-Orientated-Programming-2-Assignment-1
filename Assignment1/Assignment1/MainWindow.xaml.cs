@@ -42,6 +42,7 @@ namespace Assignment1
             string[] sortBy = { "Make", "Mileage", "Price" };
             cbxSortBy.ItemsSource = sortBy;
             cbxSortBy.SelectedIndex = 0;
+            //Checkbox at the start
             rbnAll.IsChecked = true;
 
             SetImageDirectory();
@@ -49,6 +50,7 @@ namespace Assignment1
 
         private void SetImageDirectory()
         {
+            //Setting the directory for the images
             string currentDirectory = Directory.GetCurrentDirectory();
             DirectoryInfo parent = Directory.GetParent(currentDirectory);
             DirectoryInfo grandparent = parent.Parent;
@@ -58,6 +60,7 @@ namespace Assignment1
 
         private void GetFilesInDirectory()
         {
+            //Gets all of the images in the folder
             string[] images = Directory.GetFiles(imageDirectory);
             string[] fileNames = new string[images.Length];
 
@@ -158,6 +161,7 @@ namespace Assignment1
 
         private void cbxSortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Sets the radio button to "All" (Couldn't get it working otherwise)
             rbnAll.IsChecked = true;
 
             lbxDisplay.ItemsSource = "";
@@ -191,6 +195,7 @@ namespace Assignment1
                 tblVehicleDisplay.Text = "";
                 imgVehicle.Source = null;
 
+                //Reading from the file
                 using (StreamReader sr = new StreamReader("./vehicleData/vehicleData.txt"))
                 {
                     string vehicle = sr.ReadLine();
@@ -200,6 +205,7 @@ namespace Assignment1
                         string[] newVehicle = vehicle.Split(',');
                         string checkVehicle = newVehicle[0];
 
+                        //Checks the vehicle type and makes a new object
                         switch (checkVehicle)
                         {
                             case "Car":
@@ -241,6 +247,7 @@ namespace Assignment1
             {
                 vehicleList[i] = vehicleType[i].ToString();
             }
+            //Overwirtes the entire file
             File.WriteAllLines(@"./vehicleData/vehicleData.txt", vehicleList);
 
             MessageBox.Show("File successfully saved");
@@ -250,7 +257,7 @@ namespace Assignment1
         {
             AddVehicle addVeh = new AddVehicle();
             addVeh.Owner = this;
-
+            //Opens the Add Vehicle window
             addVeh.Show();
         }
 
@@ -261,6 +268,7 @@ namespace Assignment1
             {
                 if (selectedVehicle != null)
                 {
+                    //Opens the Edit Vehicle window
                     Application.Current.Properties["selectedVehicle"] = selectedVehicle;
                     EditVehicle editVeh = new EditVehicle();
                     editVeh.Owner = this;
@@ -285,6 +293,7 @@ namespace Assignment1
             {
                 if (selectedVehicle != null)
                 {
+                    //Deletes the vehicle from the list
                     vehicleType.Remove(selectedVehicle);
                     lbxDisplay.ItemsSource = null;
                     lbxDisplay.ItemsSource = vehicleType;
