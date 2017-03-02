@@ -74,26 +74,27 @@ namespace Assignment1
                 string[] bikeType = { "Scooter", "Trail Bike", "Sport", "Commuter", "Tourer", "Unlisted" };
                 cbxType.ItemsSource = bikeType;
                 cbxType.SelectedIndex = 0;
-
                 cbxType.IsEnabled = true;
+
                 cbxBodyType.IsEnabled = false;
                 cbxBodyType.SelectedIndex = -1;
+
                 cbxWheelbase.IsEnabled = false;
                 cbxWheelbase.SelectedIndex = -1;
             }
 
             else if (vehicleTypeSelected == "Van")
             {
-                string[] wheelbase = { "Short", "Medium", "Long", "Unlisted" };
-                cbxWheelbase.ItemsSource = wheelbase;
-                cbxWheelbase.SelectedIndex = 0;
-
                 string[] vanType = { "Combi Van", "Dropside", "Panel Van", "Pcikup", "Tipper", "Unlisted" };
                 cbxType.ItemsSource = vanType;
                 cbxType.SelectedIndex = 0;
-
                 cbxType.IsEnabled = true;
+
+                string[] wheelbase = { "Short", "Medium", "Long", "Unlisted" };
+                cbxWheelbase.ItemsSource = wheelbase;
+                cbxWheelbase.SelectedIndex = 0;
                 cbxWheelbase.IsEnabled = true;
+                
                 cbxBodyType.IsEnabled = false;
                 cbxBodyType.SelectedIndex = -1;
             }
@@ -114,7 +115,7 @@ namespace Assignment1
                 string colour = tbxColour.Text;
                 int mileage = int.Parse(tbxMileage.Text);
                 string description = tbxDescription.Text;
-                string image = "/images/vehicles/" + fileName.Replace("\\", "").ToString();
+                string image = fileName.Replace("\\", "").ToString();
 
                 string bodyType;
                 string type;
@@ -136,7 +137,7 @@ namespace Assignment1
                         main.vehicleType.Add(new Van() { Make = make, Model = model, Price = price, Year = year, Colour = colour, Mileage = mileage, Description = description, Image = image, Type = type, Wheelbase = wheelbase });
                         break;
                 }
-            
+                
                 main.lbxDisplay.ItemsSource = null;
                 main.lbxDisplay.ItemsSource = main.vehicleType;
 
@@ -162,6 +163,16 @@ namespace Assignment1
                     sourceFile = dlg.FileName;
                     fileName = sourceFile.Substring(sourceFile.LastIndexOf('\\'));
                 }
+
+                destinationFile = imageDirectory + fileName;
+
+                if (!File.Exists(destinationFile))
+                {
+                    File.Copy(sourceFile, destinationFile);
+                }
+
+                tbxImagePath.Text = "";
+                tbxImagePath.Text = fileName.Replace("\\", "").ToString();
             }
 
             catch (IOException ioe)
@@ -169,17 +180,6 @@ namespace Assignment1
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + ioe.Message);
             }
 
-
-            try
-            {
-                destinationFile = imageDirectory + fileName;
-                if (File.Exists(destinationFile))
-                {
-                    File.Delete(destinationFile);
-                }
-                File.Copy(sourceFile, destinationFile);
-
-            }
             catch (Exception fe)
             {
                 MessageBox.Show("Error: Image needed for vehicle. Original Error: " + fe.Message);

@@ -62,10 +62,11 @@
         <TextBox Name="tbxDescription" Grid.Row="9" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="3" />
 
         <Label Content="Image" Grid.Row="11"/>
-        <Button Name="btnImage" Content="Select Image" Grid.Column="1" Grid.Row="11" Margin="5" />
+        <Button Name="btnImage" Content="Select Image" Grid.Column="1" Grid.Row="11" Margin="5" Click="btnImage_Click" />
+        <TextBlock Name="tbxImagePath" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"></TextBlock>
 
         <StackPanel Grid.Row="14" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Name="btnAdd" Content="Add" Height="20" Width="75" FontSize="12" Margin="0, 0, 15, 0" IsDefault="True" Click="btnAdd_Click"></Button>
+            <Button Name="btnAdd" Content="Save" Height="20" Width="75" FontSize="12" Margin="0, 0, 15, 0" IsDefault="True" Click="btnAdd_Click"></Button>
             <Button Name="btnCancel" Content="Cancel" Height="20" Width="75" FontSize="12" Click="btnCancel_Click"></Button>
         </StackPanel>
     </Grid>

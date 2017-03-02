@@ -5,31 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment1"
         mc:Ignorable="d"
-        Title="Car Application" Height="420" Width="620" Language="en-IE" Loaded="Window_Loaded">
+        Title="Car Application" Height="464.471" Width="722.118" Language="en-IE" Loaded="Window_Loaded">
 
     <Window.Resources>
         <DataTemplate x:Key="listboxTemplate">
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <!-- Add colour to this (Background colour and pad it) -->
-                    <TextBlock Text="Make: " FontWeight="Bold" />
-                    <TextBlock Text="{Binding Make}" />
+            <Grid MinWidth="625">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Background="{Binding Colour}">
+                        <!-- Add colour to this (Background colour and pad it) -->
+                        <TextBlock Text="Make: " FontWeight="Bold" Margin="5"/>
+                        <TextBlock Text="{Binding Make}" Margin="5"/>
 
-                    <TextBlock Text="Model: " FontWeight="Bold" />
-                    <TextBlock Text="{Binding Model}" />
+                        <TextBlock Text="Model: " FontWeight="Bold" Margin="5"/>
+                        <TextBlock Text="{Binding Model}" Margin="5"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Background="{Binding Colour}">
+                        <TextBlock Text="Price: " FontWeight="Bold" Margin="5"/>
+                        <TextBlock Text="{Binding Price, StringFormat=c0}" Margin="5"/>
+
+                        <TextBlock Text="Mileage: " FontWeight="Bold" Margin="5"/>
+                        <TextBlock Text="{Binding Mileage}" Margin="5"/>
+                    </StackPanel>
                 </StackPanel>
-
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Price: " FontWeight="Bold" />
-                    <TextBlock Text="{Binding Price, StringFormat=c0}" />
-
-                    <TextBlock Text="Mileage: " FontWeight="Bold" />
-                    <TextBlock Text="{Binding Mileage}" />
-                </StackPanel>
-            </StackPanel>
+            </Grid>
         </DataTemplate>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -48,7 +60,7 @@
         <Border Grid.Row="0" Grid.ColumnSpan="4" Background="Black" Margin="5" CornerRadius="5">
             <Border Background="White" Margin="5" CornerRadius="5"></Border>
         </Border>
-        
+
         <!-- Radio Buttons at the top of the program -->
         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
             <Image Source="/images/filterRadioBoxes/letterA.png"/>
@@ -71,7 +83,7 @@
         </StackPanel>
         <!-- End of Radio Buttons -->
 
-        <Label Content="Sort By" Grid.Row="1" FontSize="13" Margin="55, 10, 10, 10" />
+        <Label Content="Sort By" Grid.Row="1" FontSize="13" Margin="55, 20, 10, 10" />
         <ComboBox Name="cbxSortBy" Grid.Row="1" Margin="105, 15, 55, 15" DockPanel.Dock="Right" Grid.ColumnSpan="2" SelectionChanged="cbxSortBy_SelectionChanged"/>
 
         <ListBox Name="lbxDisplay" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" ItemTemplate="{StaticResource listboxTemplate}" SelectionChanged="lbxDisplay_SelectionChanged" />

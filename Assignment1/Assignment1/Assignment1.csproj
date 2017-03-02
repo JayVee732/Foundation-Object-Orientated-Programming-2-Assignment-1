@@ -115,8 +115,6 @@
     <Resource Include="images\filterRadioBoxes\motocycle.png" />
     <Resource Include="images\filterRadioBoxes\van.png" />
     <Resource Include="images\filterRadioBoxes\car.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\vehicles\ford-bike-black.jpg" />
     <Resource Include="images\vehicles\ford-focus-red.jpg" />
     <Resource Include="images\vehicles\ford-van-white.png" />

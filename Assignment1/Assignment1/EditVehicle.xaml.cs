@@ -20,6 +20,11 @@ namespace Assignment1
     /// </summary>
     public partial class EditVehicle : Window
     {
+        string imageDirectory;
+        string sourceFile = "";
+        string fileName = "";
+        string destinationFile = "";
+
         public Vehicle selectedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
         public Vehicle editedVehicle = Application.Current.Properties["selectedVehicle"] as Vehicle;
         public EditVehicle()
@@ -29,6 +34,8 @@ namespace Assignment1
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            SetImageDirectory();
+
             try
             {
                 if (selectedVehicle != null)
@@ -44,8 +51,17 @@ namespace Assignment1
             }
             catch (Exception)
             {
-
+                MessageBox.Show("No vehicle entered");
+                this.Close();
             }
+        }
+        private void SetImageDirectory()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo parent = Directory.GetParent(currentDirectory);
+            DirectoryInfo grandparent = parent.Parent;
+            currentDirectory = grandparent.FullName;
+            imageDirectory = currentDirectory + "\\images/vehicles";
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -57,7 +73,8 @@ namespace Assignment1
             string colour = tbxColour.Text;
             int mileage = int.Parse(tbxMileage.Text);
             string description = tbxDescription.Text;
-            
+            string image = fileName.Replace("\\", "").ToString();
+
             editedVehicle.Make = make;
             editedVehicle.Model = model;
             editedVehicle.Price = price;
@@ -65,6 +82,7 @@ namespace Assignment1
             editedVehicle.Colour = colour;
             editedVehicle.Mileage = mileage;
             editedVehicle.Description = description;
+            editedVehicle.Image = image;
 
             MainWindow main = this.Owner as MainWindow;
 
@@ -72,8 +90,6 @@ namespace Assignment1
             {
                 main.vehicleType.Remove(selectedVehicle);
                 main.vehicleType.Add(editedVehicle);
-                main.lbxDisplay.ItemsSource = null;
-                main.lbxDisplay.ItemsSource = main.vehicleType;
             }
             
             main.lbxDisplay.ItemsSource = null;
@@ -83,10 +99,49 @@ namespace Assignment1
             main.imgVehicle.Source = null;
             this.Close();
         }
-
+        
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnImage_Click(object sender, RoutedEventArgs e)
+        {
+
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Title = "Select Vehicle Image";
+            dlg.Filter = "Images (*.JPG;*.JPEG;*.PNG) | *.JPG;*.JPEG;*.PNG";
+            Nullable<bool> result = dlg.ShowDialog();
+            try
+            {
+                if (result == true)
+                {
+                    sourceFile = dlg.FileName;
+                    fileName = sourceFile.Substring(sourceFile.LastIndexOf('\\'));
+                }
+            }
+
+            catch (IOException ioe)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Original error: " + ioe.Message);
+            }
+
+            try
+            {
+                destinationFile = imageDirectory + fileName;
+                if (!File.Exists(destinationFile))
+                {
+                    File.Copy(sourceFile, destinationFile);
+                }
+                
+                tbxImagePath.Text = "";
+                tbxImagePath.Text = fileName.Replace("\\", "").ToString();
+            }
+
+            catch (Exception fe)
+            {
+                MessageBox.Show("Error: Image needed for vehicle. Original Error: " + fe.Message);
+            }
         }
     }
 }

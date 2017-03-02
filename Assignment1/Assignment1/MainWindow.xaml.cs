@@ -22,6 +22,7 @@ namespace Assignment1
     /// </summary>
     public partial class MainWindow : Window
     {
+        string imageDirectory;
         //Creation of list for use with program
         public List<Vehicle> vehicleType = new List<Vehicle>();
         IEnumerable<Vehicle> filteredVehicles = new List<Vehicle>();
@@ -41,6 +42,29 @@ namespace Assignment1
             string[] sortBy = { "Make", "Mileage", "Price" };
             cbxSortBy.ItemsSource = sortBy;
             cbxSortBy.SelectedIndex = 0;
+            rbnAll.IsChecked = true;
+
+            SetImageDirectory();
+        }
+
+        private void SetImageDirectory()
+        {
+            string currentDirectory = Directory.GetCurrentDirectory();
+            DirectoryInfo parent = Directory.GetParent(currentDirectory);
+            DirectoryInfo grandparent = parent.Parent;
+            currentDirectory = grandparent.FullName;
+            imageDirectory = currentDirectory + "\\images/vehicles";
+        }
+
+        private void GetFilesInDirectory()
+        {
+            string[] images = Directory.GetFiles(imageDirectory);
+            string[] fileNames = new string[images.Length];
+
+            for (int i = 0; i < images.Length; i++)
+            {
+                fileNames[i] = images[i].Substring(images[i].LastIndexOf('\\') + 1);
+            }
         }
 
         private void lbxDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -62,7 +86,7 @@ namespace Assignment1
                                         "\nDescription: " + selectedVehicle.Description;
 
                 //Sets the images associated with the vehicle
-                imgVehicle.Source = new BitmapImage(new Uri(selectedVehicle.Image, UriKind.Relative));
+                imgVehicle.Source = new BitmapImage(new Uri(imageDirectory + "\\" + selectedVehicle.Image, UriKind.Absolute));
             }
         }
 
@@ -134,6 +158,8 @@ namespace Assignment1
 
         private void cbxSortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            rbnAll.IsChecked = true;
+
             lbxDisplay.ItemsSource = "";
             filteredVehicles.Equals("");
             string sortedBy = cbxSortBy.SelectedValue.ToString();
@@ -156,7 +182,7 @@ namespace Assignment1
         #endregion
 
         #region Bottom Buttons
-         private void btnLoad_Click(object sender, RoutedEventArgs e)
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -198,8 +224,8 @@ namespace Assignment1
                     }
                     sr.Close();
                 }
-
             }
+
             catch (FileNotFoundException fnfe)
             {
                 MessageBox.Show(fnfe.Message);
@@ -238,9 +264,11 @@ namespace Assignment1
                     Application.Current.Properties["selectedVehicle"] = selectedVehicle;
                     EditVehicle editVeh = new EditVehicle();
                     editVeh.Owner = this;
+
                     editVeh.Show();
                 }
             }
+
             catch (Exception fe)
             {
                 MessageBox.Show(fe.Message);
@@ -250,12 +278,7 @@ namespace Assignment1
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            //Kinda works? Won't load it back in again, but messes with filtering and the like
-
             Vehicle selectedVehicle = lbxDisplay.SelectedItem as Vehicle;
-            FileStream fs = new FileStream("./vehicleData/vehicleData.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            StreamReader sr = new StreamReader(fs);
-            StreamWriter sw = new StreamWriter(fs);
 
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete this vehicle?", "Delete Vehicle?", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -265,34 +288,12 @@ namespace Assignment1
                     vehicleType.Remove(selectedVehicle);
                     lbxDisplay.ItemsSource = null;
                     lbxDisplay.ItemsSource = vehicleType;
-
-                    string vehicle = sr.ReadLine();
-
-                    while (vehicle != null)
-                    {
-                        string[] newVehicle = vehicle.Split(',');
-
-                        if (selectedVehicle.Make == newVehicle[1] && selectedVehicle.Mileage == int.Parse(newVehicle[6]))
-                        {
-                            sw.WriteLine("");
-                            newVehicle = null;
-                            vehicle = sr.ReadLine();
-                        }
-                        else
-                        {
-                            newVehicle = null;
-                            vehicle = sr.ReadLine();
-                        }
-                    }
                 }
             }
-
-            fs.Close();
 
             tblVehicleDisplay.Text = "";
             imgVehicle.Source = null;
         }
-
         #endregion
     }
 }
