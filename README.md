@@ -3,14 +3,15 @@
 Create an application which lists vehicles for sale in 3 categories – Cars, Motorbikes, Vans.
 The user should be able to:
 
-⋅⋅* View all vehicles for sale
-⋅⋅* Filter by All, Cars, Bikes, Vans
-⋅⋅* Sort by Price, Mileage, Make
-⋅⋅* View Details on each car
-⋅⋅* Edit details on each car
-⋅⋅* Load values from file
-⋅⋅* Save values to file
-⋅⋅* Delete an entry
+• View all vehicles for sale
+• Filter by All, Cars, Bikes, Vans
+• Sort by Price, Mileage, Make
+• View Details on each car
+• Edit details on each car
+• Load values from file
+• Save values to file
+• Delete an entry
+
 
 **Marking Scheme**
 Inheritance -	5
@@ -48,7 +49,7 @@ Colour Scheme - 10
 
 
 | **Vehicle**   | **Car**       | **Bike**  | **Van**  |
-| ------------- |:-------------:| ---------:|---------:|
+| ------------- |-------------| ---------|---------|
 | Make          | BodyType -        | Type - Scooter, Trail, | Wheelbase - Short, |
 | Model         | Convertable       | Bike, Sports           | Medium, Long,
 | Price         | Hatckback, Coupe  | Commuter, Tourer       | Unlisted
